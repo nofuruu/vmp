@@ -6,7 +6,7 @@ body {
     height: 100vh;
 }
 
-.login-container {
+.register-container {
     display: flex;
     width: 800px;
     background-color: #ffffff;
@@ -17,13 +17,13 @@ body {
 
 .left-panel {
     width: 30%;
-    background: linear-gradient(to bottom left, #0cf533, #5373ff);
+    background: linear-gradient(to bottom left, #3A59D1, #7AE2CF);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 30px;
-    color: #fff;
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 
@@ -40,19 +40,11 @@ body {
 .right-panel {
     width: 70%;
     padding: 40px;
-}
-
-.right-panel {
     flex: 1;
     padding: 50px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.right-panel h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
 }
 
 .right-panel p {
@@ -75,13 +67,13 @@ body {
 }
 
 .form-group input {
-    flex: 1;
+    color: #24252a;
     border: none;
     background: transparent;
     outline: none;
     padding: 10px 0;
     font-size: 16px;
-    color: #000;
+    color: #2e2e2e;
 }
 
 .form-group input::placeholder {
@@ -106,30 +98,19 @@ body {
     color: #24252a;
 }
 
-.login-btn {
-    width: 100%;
+.submit-btn {
+    width: 20%;
     padding: 12px;
-    background-color: #4a6af7;
-    color: #fff;
+    background-color: rgb(131, 214, 148);
+    color: #ffffff;
     font-size: 16px;
     font-weight: 500;
     border: none;
     cursor: pointer;
+    border-radius: 50px;
     transition: background 0.3s;
 }
 
-.login-btn:hover {
-    background-color: #3d3e40;
-}
-
-.basic-link {
-    margin-top: 15px;
-    display: inline-block;
-    font-size: 14px;
-    color: #999;
-    text-decoration: none;
-}
-
-.basic-link:hover {
-    text-decoration: underline;
+.submit-btn:hover {
+    background-color: rgb(120, 176, 131);
 }
