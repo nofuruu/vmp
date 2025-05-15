@@ -3,54 +3,57 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Login | VMP Music</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Login vmp</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
-<style>
-    body {
-        background-color: #24252a;
-    }
-</style>
 
 <body>
-    <div class="container d-flex justify-content-center mt-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">login vmp</h3>
-            </div>
-            <div class="card-body">
-                <form id="loginForm">
-                    <div class="form-group">
-                        <span class="label"><i class="fa fa-user"></i> Username</span>
-                        <input type="text" class="form-control" name="username" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <span class="label"><i class="fa fa-key"></i>Password</span>
-                        <input type="password" class="form-control" name="password" id="password" required>
-                    </div>
-                    <div class="form-group mt-2">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
+    <div class="login-container" data-aos="fade-right">
+        <div class="left-panel" data-aos="fade-left">
+            <h1>Join VMP</h1>
+            <p>Get an endless experience to listening music</p>
+            <i class="fas fa-music fa-3x mt-4"></i>
+        </div>
+        <div class="right-panel" data-aos="fade-right">
+            <h2>Welcome to <strong>VMP</strong></h2>
+            <p>Virtual Music Player Web Application</p>
+            <div id="loader" class="loading-spinner" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="username" name="usernm" placeholder=" " required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-key"></i>
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                <button type="submit" class="login-btn" data-aos="fade-right">Log in</button>
+            </form>
+            <div class="footer mt-2">
+                <h6>Dont have account? <a href="" class="basic-link">Register</a></h6>
             </div>
         </div>
     </div>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#formLogin').on('submit', function(e) {
+            e.preventDefault(); // penting: mencegah reload
+            const username = $('#username').val();
+            const password = $('#password').val();
 
-        const username = $('#username').val();
-        const password = $('#password'.val())
-
-        $('#loginForm').on('submit', function() {
             $.ajax({
-                url: '',
+                url: '', // ganti dengan URL proses login kamu
                 type: 'POST',
+                dataType: 'json',
                 data: {
                     username,
                     password
@@ -59,26 +62,26 @@
                     if (response.status === true) {
                         Swal.fire({
                             icon: 'success',
-                            text: 'login success'
+                            text: 'Login success'
                         }).then(() => {
-                            windows.response.redirect
+                            window.location.href = response.redirect;
                         });
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            text: 'something wrong, please again later'
+                            text: 'Something went wrong, please try again.'
                         });
                     }
                 },
-                error: function(xhr) {
+                error: function() {
                     Swal.fire({
                         icon: 'error',
-                        title: response.status
-                    })
+                        text: 'Connection error. Please try later.'
+                    });
                 }
-            })
-        })
-    })
+            });
+        });
+    });
 </script>
 
 </html>
