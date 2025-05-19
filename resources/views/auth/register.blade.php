@@ -11,9 +11,18 @@
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
 
+<style>
+
+</style>
 
 <body>
     <div class="register-container">
+        <div class="back-container">
+            <a href="{{ url('login') }}">
+                <i class="fa fa-arrow-left"></i>
+                <span class="back-text">Back</span>
+            </a>
+        </div>
         <div class="left-panel">
             <h1>Register VMP</h1>
             <p>registration form</p>

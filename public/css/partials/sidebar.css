@@ -1,0 +1,73 @@
+:root {
+    --primary: #24252a;
+    --primary-light: #2f3037;
+    --primary-dark: #1a1b1f;
+    --accent: #3d3e45;
+    --accent-red: #ff3a4c;
+    /* Merah yang vibrant tapi masih sesuai dengan tema gelap */
+}
+
+body {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.sidebar-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.primary-gradient {
+    background: linear-gradient(
+        145deg,
+        var(--primary-light),
+        var(--primary-dark)
+    );
+}
+
+.hover-gradient:hover {
+    background: linear-gradient(
+        145deg,
+        var(--primary-dark),
+        var(--primary-light)
+    );
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.neo-shadow {
+    box-shadow: 5px 5px 10px var(--primary-dark),
+        -5px -5px 10px var(--primary-light);
+}
+
+.hover-neo:hover {
+    box-shadow: inset 5px 5px 10px var(--primary-dark),
+        inset -5px -5px 10px var(--primary-light);
+}
+
+/* Menambahkan transisi hover untuk menu text */
+.menu-item span {
+    transition: color 0.3s ease;
+}
+
+/* Efek hover merah pada text menu */
+.menu-item:hover span {
+    color: var(--accent-red);
+}
+
+/* Efek hover merah pada icon */
+.menu-item:hover svg {
+    color: var(--accent-red);
+}
+
+/* Efek glow subtle saat hover */
+.menu-item:hover {
+    text-shadow: 0 0 8px rgba(255, 58, 76, 0.3);
+}

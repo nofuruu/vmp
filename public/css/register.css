@@ -17,7 +17,7 @@ body {
 
 .left-panel {
     width: 30%;
-    background: linear-gradient(to bottom left, #3A59D1, #7AE2CF);
+    background: linear-gradient(to bottom left, #3a59d1, #7ae2cf);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,4 +113,54 @@ body {
 
 .submit-btn:hover {
     background-color: rgb(120, 176, 131);
+}
+
+.back-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom-right-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 10;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-container:hover {
+    width: 120px;
+    /* diperluas saat hover */
+    background-color: #f1f1f1;
+}
+
+.back-container a {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-decoration: none;
+    color: #3a59d1;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.back-container i {
+    font-size: 18px;
+}
+
+.back-container .back-text {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.back-container:hover .back-text {
+    opacity: 1;
 }
