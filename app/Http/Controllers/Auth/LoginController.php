@@ -16,4 +16,27 @@ class LoginController extends Controller
     {
         return view('auth.register');
     }
+
+    public function setSession(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'user_name' => 'required',
+        ]);
+
+        session()->put([
+            'isLoggedIn' => true,
+            'user_id' => $request->user_id,
+            'user_name' => $request->user_name,
+        ]);
+
+        return response()->json(['status' => true]);
+    }
+
+    public function logout()
+    {
+        session()->flush();
+
+        return redirect('/login');
+    }
 }
