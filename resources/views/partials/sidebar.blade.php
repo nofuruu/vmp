@@ -108,7 +108,8 @@
                         class="menu-item flex items-center p-2 text-gray-300 rounded-lg hover-gradient hover-neo group transition-all duration-300">
                         <i class="fas fa-envelope text-[20px] w-5 h-5 transition-colors duration-300"></i>
                         <span class="ms-3">Messages</span>
-                        <span class="ms-auto px-2 py-0.5 text-xs font-medium glass-effect text-gray-300 rounded-full">3</span>
+                        <span
+                            class="ms-auto px-2 py-0.5 text-xs font-medium glass-effect text-gray-300 rounded-full">3</span>
                     </a>
                 </li>
                 <li>
@@ -116,7 +117,8 @@
                         class="menu-item flex items-center p-2 text-gray-300 rounded-lg hover-gradient hover-neo group transition-all duration-300">
                         <i class="fas fa-folder text-[20px] w-5 h-5 transition-colors duration-300"></i>
                         <span class="ms-3">Projects</span>
-                        <span class="ms-auto px-2 py-0.5 text-xs font-medium glass-effect text-gray-300 rounded-full">New</span>
+                        <span
+                            class="ms-auto px-2 py-0.5 text-xs font-medium glass-effect text-gray-300 rounded-full">New</span>
                     </a>
                 </li>
                 <li>
@@ -152,6 +154,14 @@
             } else {
                 mainContent.style.paddingLeft = '16rem';
             }
+
+            // Tambahkan ini untuk trigger event
+            const event = new CustomEvent('sidebarToggled', {
+                detail: {
+                    closed: sidebar.classList.contains('-translate-x-full')
+                }
+            });
+            window.dispatchEvent(event);
         }
 
         function toggleUserMenu() {
