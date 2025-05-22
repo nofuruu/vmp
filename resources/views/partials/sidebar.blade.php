@@ -57,8 +57,8 @@
                             <div id="user-menu"
                                 class="absolute right-0 hidden w-48 mt-2 origin-top-right bg-[#24252a] rounded-lg neo-shadow">
                                 <div class="px-4 py-3 text-sm text-gray-200">
-                                    <div class="font-medium">John Doe</div>
-                                    <div class="text-xs text-gray-400">john@example.com</div>
+                                    <div class="font-medium" id="username"></div>
+                                    <div class="text-xs text-gray-400" id="email"></div>
                                 </div>
                                 <hr class="border-gray-700">
                                 <div class="py-1">
@@ -66,8 +66,7 @@
                                         class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
                                     <a href="#"
                                         class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
-                                    <a href="{{ url('/logout') }}" class="block px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Sign
-                                        out</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-red-400 hover:bg-gray-700" id="logoutBtn">Sign out</a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +142,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -175,6 +173,71 @@
             if (!button && !menu.classList.contains('hidden')) {
                 menu.classList.add('hidden');
             }
+        });
+
+        function getUserData() {
+            let userid = localStorage.getItem('id'); // pastikan variabel ini ada
+            if (!userid) {
+                console.error("User ID tidak ditemukan di localStorage.");
+                return;
+            }
+
+            $.ajax({
+                url: `http://10.21.1.125:8000/api/user/${userid}`,
+                type: 'GET',
+                success: function(response) {
+                    if (response.status === true) {
+                        $('#username').text(response.user.name);
+                        $('#email').text(response.user.email);
+                    }
+                },
+                error: function() {
+                    notify("error", "Gagal mengambil data pengguna.");
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+            getUserData();
+            
+            $('#logoutBtn').on('click', function(e) {
+                e.preventDefault();
+                iziToast.question({
+                    timeout: false,
+                    close: false,
+                    overlay: true,
+                    displayMode: 'once',
+                    title: '⚠️',
+                    message: 'Are you sure you want to logout?',
+                    position: 'center',
+                    backgroundColor: '#1f2937', // dark gray
+                    titleColor: '#ffffff',
+                    messageColor: '#ffffff',
+                    buttons: [
+                        [
+                            '<button style="background-color:#dc2626;color:white;padding:6px 12px;border:none;border-radius:4px;margin-right:10px;">Yes</button>',
+                            function(instance, toast) {
+                                localStorage.removeItem('id');
+                                localStorage.removeItem('name');
+                                window.location.href = "{{ url('/logout') }}";
+                                instance.hide({
+                                    transitionOut: 'fadeOut'
+                                }, toast, 'button');
+                            },
+                            true
+                        ],
+                        [
+                            '<button style="background-color:#6b7280;color:white;padding:6px 12px;border:none;border-radius:4px;">Cancel</button>',
+                            function(instance, toast) {
+                                instance.hide({
+                                    transitionOut: 'fadeOut'
+                                }, toast, 'button');
+                            }
+                        ]
+                    ]
+                });
+            });
         });
     </script>
 </body>

@@ -64,13 +64,40 @@
             </div>
         </div>
     </div>
+
+    <div id="loadingOverlay" style="display: none;">
+        <div class="loader-container">
+            <div class="dot-loader">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script src="{{ asset('js/toast.js') }}"></script>
 <script>
+
+    function showLoading() {
+        document.getElementById("loadingOverlay").style.display = "flex";
+    }
+
+    function hideLoading() {
+        document.getElementById("loadingOverlay").style.display = "none";
+    }
+
+    function loadingStart() {
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+        }, 3000);
+    }
+    
     $(document).ready(function() {
+        loadingStart();
         $('#loginForm').on('submit', function(e) {
             e.preventDefault();
             const username = $('#username').val();
@@ -87,8 +114,8 @@
                 },
                 success: function(response) {
                     if (response.status === true) {
-                        localStorage.setItem('user_id', response.user_id);
-                        localStorage.setItem('user_name', response.user.name);
+                        localStorage.setItem('id', response.user.id);
+                        localStorage.setItem('name', response.user.name);
                         $.ajax({
                             type: 'POST',
                             url: '/set-session',
@@ -105,6 +132,7 @@
                                 if (sessionResponse.status === true) {
                                     notify("success", "Login Success");
                                     setTimeout(() => {
+                                        showLoading();
                                         window.location.href = "{{url('/dashboard') }}"
                                     }, 2000);
                                 } else {

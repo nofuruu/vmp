@@ -1,0 +1,212 @@
+  .dropzone {
+        background-color: #1f2937;
+        border: 2px dashed #4b5563;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        color: #d1d5db;
+        text-align: center;
+        font-size: 0.875rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .dropzone:hover {
+        border-color: #6366f1;
+        background-color: #374151;
+    }
+
+    .dropzone .dz-message {
+        font-weight: 500;
+    }
+
+    .dropzone .dz-preview {
+        background-color: transparent !important;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        padding: 0.5rem;
+        position: relative;
+    }
+
+    .dropzone .dz-remove {
+        color: #f87171;
+        cursor: pointer;
+    }
+
+    .dropzone .dz-success-mark,
+    .dropzone .dz-error-mark {
+        display: none;
+    }
+
+    .dropzone .dz-error-message {
+        color: #f87171;
+        font-size: 0.75rem;
+    }
+
+    .dropzone .dz-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+        background-color: transparent !important;
+    }
+
+    .dropzone .dz-preview .dz-image {
+        background-color: transparent !important;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dropzone .dz-preview .dz-image img {
+        border-radius: 0.5rem;
+        background-color: transparent !important;
+    }
+
+    /* Tambahan aturan untuk menghilangkan background putih */
+    .dropzone * {
+        background-color: transparent !important;
+    }
+
+    .dropzone .dz-preview.dz-image-preview {
+        background-color: transparent !important;
+    }
+
+    .dropzone .dz-preview .dz-image canvas {
+        background-color: transparent !important;
+    }
+
+    /* Aturan untuk memastikan thumbnail memiliki background gelap */
+    .dropzone .dz-preview .dz-image img,
+    .dropzone .dz-preview .dz-image canvas {
+        background-color: #1f2937 !important;
+    }
+
+    .hide-scrollbar .select2-results__options::-webkit-scrollbar {
+        width: 0 !important
+    }
+
+    .hide-scrollbar .select2-results__options {
+        scrollbar-width: none;
+    }
+
+    .select2-container--default .select2-selection--single {
+        background-color: #1f2937 !important;
+        /* bg-gray-800 */
+        border: 1px solid #4b5563 !important;
+        /* border-gray-600 */
+        color: #fff !important;
+        /* text-white */
+        border-radius: 0.5rem !important;
+        /* rounded-lg */
+        padding: 0.5rem 1rem !important;
+        /* px-4 py-2 */
+        height: auto !important;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #fff !important;
+        /* text-white */
+        line-height: 2rem !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100% !important;
+    }
+
+    .select2-dropdown {
+        background-color: #1f2937 !important;
+        /* bg-gray-800 */
+        color: #fff !important;
+        /* text-white */
+        border: 1px solid #4b5563 !important;
+        /* border-gray-600 */
+    }
+
+    .select2-results__option {
+        color: #fff !important;
+        /* text-white */
+    }
+
+    .select2-results__option--highlighted {
+        background-color: #6366f1 !important;
+        /* indigo-500 */
+        color: #fff !important;
+    }
+
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        background-color: #1f2937 !important;
+        /* bg-gray-800 */
+        color: #fff !important;
+        /* text-white */
+        border: 1px solid #4b5563 !important;
+        /* border-gray-600 */
+        padding: 0.5rem 0.75rem !important;
+        border-radius: 0.5rem !important;
+    }
+
+    .select2-container--default .select2-results__option[aria-selected="true"] {
+        background-color: #374151 !important;
+        /* contoh: bg-gray-700 */
+        color: #fff !important;
+    }
+
+    /* Style untuk audio player */
+    audio {
+        background-color: #1f2937 !important;
+        border-radius: 0.5rem;
+        width: 100%;
+    }
+
+    /* Style untuk kontrol audio */
+    audio::-webkit-media-controls-panel {
+        background-color: #1f2937 !important;
+    }
+
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+        color: #ffffff !important;
+    }
+
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-timeline,
+    audio::-webkit-media-controls-volume-slider {
+        filter: invert(1);
+    }
+
+    /* Style untuk preview audio di dropzone */
+    .dropzone .dz-preview .dz-details .dz-size,
+    .dropzone .dz-preview .dz-details .dz-filename {
+        color: #ffffff !important;
+    }
+
+    .dropzone .dz-preview {
+        background-color: #1f2937 !important;
+    }
+
+    /* Style untuk audio preview container */
+    .dz-preview audio {
+        background-color: #1f2937 !important;
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Style untuk teks filename */
+    .dz-filename {
+        color: #ffffff !important;
+        margin-top: 0.5rem;
+    }
+
+    /* Style untuk size indicator */
+    .dz-size {
+        color: #ffffff !important;
+    }
+
+    /* Style untuk remove link */
+    .dz-remove {
+        color: #f87171 !important;
+        margin-top: 0.5rem;
+    }

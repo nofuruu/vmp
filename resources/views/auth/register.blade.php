@@ -30,7 +30,10 @@
         </div>
         <div class="right-panel">
             <p>Fill the registration requirements bellow</p>
-            <div class="loader" class="loading-spinner" style="display: none;"></div>
+            <div class="loader" class="loading-spinner" style="display: none;">
+                <div class="tenor-gif-embed" data-postid="17442480" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/bttv-rolling-cat-cute-pixelated-gif-17442480">Bttv Rolling Cat Sticker</a>from <a href="https://tenor.com/search/bttv-stickers">Bttv Stickers</a></div>
+                <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+            </div>
             <form id="registerForm">
                 <div class="form-group">
                     <i class="fa fa-user"></i>
@@ -56,13 +59,42 @@
             </form>
         </div>
     </div>
+
+    <div id="loadingOverlay" style="display: none;">
+        <div class="loader-container">
+            <div class="dot-loader">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 <script src="{{ asset('js/toast.js') }}"></script>
 <script>
+    function showLoading() {
+        document.getElementById("loadingOverlay").style.display = "flex";
+    }
+
+    function hideLoading() {
+        document.getElementById("loadingOverlay").style.display = "none";
+
+    }
+
+    function loadingStart() {
+        //fungsi untuk menambahkan loading setiap masuk ke halaman ini
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+        }, 3000);
+    }
+
+
     $(document).ready(function() {
+        loadingStart();
         $('#registerForm').on('submit', function(e) {
             e.preventDefault();
             const data = {
@@ -83,8 +115,9 @@
                     if (response.status === true) {
                         notify("success", "Registration complete")
                         setTimeout(() => {
-                            window.location.redirect = resposne.redirect
-                        });
+                            showLoading();
+                            window.location.href = "{{ url('/login') }}";
+                        }, 2000);
                     } else {
                         notify("error", "Registration failed, try again")
                     }

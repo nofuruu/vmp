@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\ProfileController;
 
-Route::middleware('noauth')->group(function () {
+Route::middleware(['noauth', 'prevent-back-history'])->group(function () {
     Route::get('/', [LoginController::class, 'index']);
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::get('/register', [LoginController::class, 'register'])->name('register');
@@ -22,6 +22,5 @@ Route::middleware(['auth.custom', 'prevent-back-history'])->group(function () {
     //Master Music
     Route::get('/msmusic', [MusicController::class, 'index'])->name('msmusic.page');
     Route::get('/addmusic', [MusicController::class, 'add'])->name('music.add');
+    
 });
-
-
