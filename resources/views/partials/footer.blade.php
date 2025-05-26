@@ -16,14 +16,14 @@
     <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
     <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
     <div class="flex items-center space-x-4 min-w-0 w-full">
-        <img id="albumArt" alt="Album Art"
+        <img id="albumArt" src="/assets/images/HistoryOfBadDecisions_NeckDeep.jpeg" alt="Album Art"
             class="w-12 h-12 rounded object-cover flex-shrink-0 shadow-md" />
         <div class="flex flex-col justify-center min-w-fit">
             <div id="trackTitle" class="font-semibold text-gray-100">
-                <!-- History of Bad Decisions -->
+                History of Bad Decisions
             </div>
             <div class="text-gray-400 text-sm" id="trackArtist">
-                <!-- Neck Deep -->
+                Neck Deep
             </div>
         </div>
         <span class="text-gray-400 text-sm ml-2 whitespace-nowrap flex-shrink-0" id="trackDuration">0:00 / 0:00</span>
@@ -216,15 +216,15 @@
 </style>
 
 <script>
-    // const tracks = [{
-    //     title: "History of Bad Decisions",
-    //     artist: "Neck Deep • Up In Smoke",
-    //     albumArt: "/assets/images/HistoryOfBadDecisions_NeckDeep.jpeg",
-    //     src: "/assets/music/Neck Deep - Up In Smoke.mp3",
-    //     duration: 240 // Duration in seconds
-    // },
+    const tracks = [{
+        title: "History of Bad Decisions",
+        artist: "Neck Deep • Up In Smoke",
+        albumArt: "/assets/images/HistoryOfBadDecisions_NeckDeep.jpeg",
+        src: "/assets/music/Neck Deep - Up In Smoke.mp3",
+        duration: 240 // Duration in seconds
+    },
     // Additional tracks...
-    // ];
+    ];
 
     let currentTrackIndex = 0;
     let currentSong = null;

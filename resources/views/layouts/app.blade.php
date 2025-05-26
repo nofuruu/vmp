@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
-
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
@@ -23,6 +22,10 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    .main-content {
+        padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+    }
 </style>
 
 <body class="bg-[#24252a] text-white">
@@ -30,10 +33,11 @@
 
     @include('partials.right-sidebar')
 
-    <div id="mainContent" class="main-content transition-all duration-300"
+    <div id="mainContent" class="main-content transition-all duration-300 pb-24"
         style="padding-left: 16rem; padding-top: 4.5rem;">
         @yield('content')
     </div>
+
     @include('partials.footer')
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

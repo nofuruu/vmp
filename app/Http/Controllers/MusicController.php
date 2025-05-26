@@ -25,4 +25,9 @@ class MusicController extends Controller
             'genre' => $this->genre,
         ]);
     }
+
+    public function search()
+    {
+        return view('msmusic/search-menu');
+    }
 }

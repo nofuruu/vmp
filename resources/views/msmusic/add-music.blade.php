@@ -91,6 +91,20 @@
         </div>
     </div>
 </div>
+<div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-[#2f3036] p-6 rounded-lg shadow-xl border border-gray-700 max-w-sm w-full mx-4">
+        <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+            <div class="flex-1">
+                <h3 class="text-lg font-medium text-white" id="uploadStatus">Uploading...</h3>
+                <div class="mt-2 w-full bg-gray-700 rounded-full h-2.5">
+                    <div id="uploadProgress" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p class="text-sm text-gray-400 mt-2" id="uploadDetails">Preparing files...</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 <script>
@@ -100,126 +114,190 @@
         document.getElementById(id).value = url;
     }
 
-    const coverDropzone = new Dropzone("#coverDropzone", {
-        url: "http://10.21.1.125:8000/api/upload-cover",
-        paramName: "cover_img",
-        maxFiles: 1,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('api_token')}`
-        },
-        dictDefaultMessage: "Drop or click to upload cover image",
-        init() {
-            this.on("success", (file, res) => {
-                setUrlInput("cover_url", res.url);
-            });
-            this.on("removedfile", () => {
-                setUrlInput("cover_url", "");
-            });
-        }
-    });
+    function showLoading(message = 'Uploading...') {
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+        document.getElementById('loadingOverlay').classList.add('flex');
+        document.getElementById('uploadStatus').textContent = message;
+    }
 
-    const audioDropzone = new Dropzone("#audioDropzone", {
-        url: "http://10.21.1.125:8000/api/upload-audio",
-        paramName: "audio_file",
-        maxFiles: 1,
-        acceptedFiles: "audio/*",
-        addRemoveLinks: true,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('api_token')}`
-        },
-        dictDefaultMessage: "Drop or click to upload audio file",
-        init() {
-            this.on("success", (file, res) => {
-                setUrlInput("audio_url", res.url);
-                const audio = document.createElement('audio');
-                audio.controls = true;
-                audio.src = res.url;
-                file.previewElement.appendChild(audio);
-            });
-            this.on("removedfile", () => {
-                setUrlInput("audio_url", "");
-            });
-        }
-    });
+    function updateProgress(percent, details) {
+        document.getElementById('uploadProgress').style.width = `${percent}%`;
+        document.getElementById('uploadDetails').textContent = details;
+    }
 
-    document.getElementById('addMusicForm').addEventListener('submit', function(e) {
+    function hideLoading() {
+        document.getElementById('loadingOverlay').classList.add('hidden');
+        document.getElementById('loadingOverlay').classList.remove('flex');
+    }
+
+    function initializeDropzones() {
+        coverDropzone = new Dropzone("#coverDropzone", {
+            url: "http://10.21.1.125:8000/api/upload-cover",
+            paramName: "cover_img",
+            maxFiles: 1,
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            autoProcessQueue: false, // Don't upload automatically
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('api_token')}`
+            },
+            dictDefaultMessage: "Drop or click to upload cover image",
+            init() {
+                this.on("success", (file, res) => {
+                    setUrlInput("cover_url", res.url);
+                });
+                this.on("removedfile", () => {
+                    setUrlInput("cover_url", "");
+                });
+            }
+        });
+
+        audioDropzone = new Dropzone("#audioDropzone", {
+            url: "http://10.21.1.125:8000/api/upload-audio",
+            paramName: "audio_file",
+            maxFiles: 1,
+            acceptedFiles: "audio/*",
+            addRemoveLinks: true,
+            autoProcessQueue: false, // Don't upload automatically
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('api_token')}`
+            },
+            dictDefaultMessage: "Drop or click to upload audio file",
+            init() {
+                this.on("success", (file, res) => {
+                    setUrlInput("audio_url", res.url);
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = res.url;
+                    file.previewElement.appendChild(audio);
+                });
+                this.on("removedfile", () => {
+                    setUrlInput("audio_url", "");
+                });
+            }
+        });
+    }
+
+    document.getElementById('addMusicForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const data = {
-            title: document.getElementById('title').value,
-            album: document.getElementById('album').value,
-            genre: $('#genre').val(),
-            artist: document.getElementById('artist').value,
-            description: document.getElementById('description').value,
-            duration: document.getElementById('duration').value,
-            cover_url: document.getElementById('cover_url').value,
-            audio_url: document.getElementById('audio_url').value,
-        };
-
-        if (!data.cover_url || !data.audio_url) {
+        // Check if files are selected
+        if (!coverDropzone.files.length || !audioDropzone.files.length) {
             iziToast.warning({
-                message: 'Please fill the audio and cover image',
+                message: 'Please select both cover image and audio file',
                 position: 'topRight',
                 backgroundColor: '#1f2937',
                 titleColor: '#fff',
                 messageColor: '#fff',
                 timeout: 3000
             });
-        }
-        // ...existing code...
-        const durationPattern = /^([0-5]?\d):([0-5]\d)$/;
-        if (!durationPattern.test(data.duration)) {
-            iziToast.warning({
-                message: 'Duration must be in required format mm:ss, ex: 5:23',
-                position: 'topRight',
-                backgroundColor: '#1f2937',
-                titleColor: '#fff',
-                messageColor: '#fff',
-                timeout: 3000
-            });
+            return;
         }
 
-        fetch('http://10.21.1.125:8000/api/music', {
+        try {
+            showLoading("uploading cover images...");
+            updateProgress(0, 'Processing cover image...')
+            // Upload cover image first
+            await new Promise((resolve, reject) => {
+                coverDropzone.processQueue();
+                coverDropzone.on("totaluploadprogress", function(progress) {
+                    updateProgress(progress / 2, 'Uploading cover image...');
+                });
+                coverDropzone.on("complete", function(file) {
+                    if (file.status === "success") {
+                        updateProgress(50, 'Cover image uploaded successfully');
+                        resolve();
+                    } else {
+                        reject(new Error("Cover upload failed"));
+                    }
+                });
+            });
+
+            updateProgress(50, 'Processing audio file...');
+            // Then upload audio file
+            await new Promise((resolve, reject) => {
+                audioDropzone.processQueue();
+                audioDropzone.on("totaluploadprogress", function(progress) {
+                    updateProgress(50 + progress / 2, 'Uploading audio file...');
+                });
+                audioDropzone.on("complete", function(file) {
+                    if (file.status === "success") {
+                        updateProgress(100, 'Audio file uploaded successfully');
+                        resolve();
+                    } else {
+                        reject(new Error("Audio upload failed"));
+                    }
+                });
+            });
+
+            showLoading('Saving music details...');
+            // Once both uploads are complete, submit the form data
+            const data = {
+                title: document.getElementById('title').value,
+                album: document.getElementById('album').value,
+                genre: $('#genre').val(),
+                artist: document.getElementById('artist').value,
+                description: document.getElementById('description').value,
+                duration: document.getElementById('duration').value,
+                cover_url: document.getElementById('cover_url').value,
+                audio_url: document.getElementById('audio_url').value,
+            };
+
+            // Validate duration format
+            const durationPattern = /^([0-5]?\d):([0-5]\d)$/;
+            if (!durationPattern.test(data.duration)) {
+                iziToast.warning({
+                    message: 'Duration must be in required format mm:ss, ex: 5:23',
+                    position: 'topRight',
+                    backgroundColor: '#1f2937',
+                    titleColor: '#fff',
+                    messageColor: '#fff',
+                    timeout: 3000
+                });
+                return;
+            }
+
+            // Submit the form data
+            const response = await fetch('http://10.21.1.125:8000/api/music', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('api_token')}`
                 },
                 body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    iziToast.success({
-                        title: 'Upload Success',
-                        message: 'Your music will displayed in dashboard',
-                        position: 'top-right',
-                        backgroundColor: '#16a34a',
-                        titleColor: '#fff',
-                        timeout: 3000
-                    });
-                    window.location.reload();
-                } else {
-                    iziToast.warning({
-                        title: 'Upload music error',
-                        message: 'Missing the following input requirements',
-                        position: 'top-right',
-                        backgroundColor: '#1f2937',
-                        titleColor: '#fff',
-                        messageColor: '#fff',
-                        timeout: 3000
-                    });
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert('An error occurred.');
             });
+
+            const json = await response.json();
+            if (json.success) {
+                hideLoading();
+                iziToast.success({
+                    title: 'Upload Success',
+                    message: 'Your music has been uploaded successfully',
+                    position: 'topRight',
+                    backgroundColor: '#16a34a',
+                    titleColor: '#fff',
+                    timeout: 3000
+                });
+                window.location.reload();
+            } else {
+                throw new Error('Upload failed');
+            }
+        } catch (error) {
+              hideLoading();
+            iziToast.error({
+                title: 'Error',
+                message: error.message || 'An error occurred during upload',
+                position: 'topRight',
+                backgroundColor: '#dc2626',
+                titleColor: '#fff',
+                messageColor: '#fff',
+                timeout: 3000
+            });
+        }
     });
 
     $(document).ready(function() {
+        initializeDropzones();
         $('#genre').select2({
             dropdownAutoWidth: true,
             width: '100%',

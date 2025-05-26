@@ -22,5 +22,5 @@ Route::middleware(['auth.custom', 'prevent-back-history'])->group(function () {
     //Master Music
     Route::get('/msmusic', [MusicController::class, 'index'])->name('msmusic.page');
     Route::get('/addmusic', [MusicController::class, 'add'])->name('music.add');
-    
+    Route::get('/music/search', [MusicController::class, 'search'])->name('music.search.menu');
 });
