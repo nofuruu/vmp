@@ -47,7 +47,7 @@
 </div>
 
 <script>
-    const apiUrl = 'http://10.21.1.125:8000/api/music';
+    const apiUrl = 'http://10.21.1.125:8000/api/songs';
     let searchTimeout;
 
     function loadMusic(query = '') {
@@ -116,6 +116,7 @@
 
     $(document).ready(function() {
         loadMusic();
+
         // Debounced search on input
         $('#searchInput').on('input', function() {
             const query = $(this).val();

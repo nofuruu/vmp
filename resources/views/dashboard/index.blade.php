@@ -3,110 +3,127 @@
 @section('title', 'VMP | Dashboard')
 
 @section('content')
-<div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
-    <!-- Bagian Kiri: Album -->
-    <div class="md:col-span-3 flex flex-col gap-8">
 
-        <!-- Kumpulan Album -->
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Kumpulan Album</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="albumCollection">
-                <!-- Album akan di-render oleh JS -->
-            </div>
-        </div>
+<style>
+    body {
+        overflow-x: hidden;
+    }
+</style>
+<div class="p-6 space-y-8">
+    <!-- Header Section with Genre Filter -->
+    <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-100">Your Music</h1>
+        <div class="relative">
+            <button id="genreBtn"
+                class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-200 hover:text-white border border-gray-600 transition-all duration-300 ease-in-out shadow-lg font-semibold">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                </svg>
+                Filter by Genre
+            </button>
 
-        <!-- Albums for you (semua lagu / hasil filter genre) -->
-        <div>
-            <h2 id="albumTitle" class="text-2xl font-bold mb-4"></h2>
-            <div class="flex items-center gap-2 mb-2">
-                <button onclick="scrollToLeft('albumScroll')"
-                    class="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded">&larr;</button>
-                <button onclick="scrollToRight('albumScroll')"
-                    class="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded">&rarr;</button>
-            </div>
-            <div class="overflow-x-auto scrollbar-hide cursor-grab mb-8" id="albumScroll">
-                <!-- isi di‐render oleh JS -->
-            </div>
-        </div>
-
-        <!-- Album Terbaru -->
-        <div class="" id="albumBaruWrapper">
-            <h2 class="text-2xl font-bold mb-4">Album Terbaru</h2>
-            <div class="overflow-x-auto scrollbar-hide cursor-grab" id="albumScrollBaru">
-                <!-- isi di‐render oleh JS -->
-            </div>
-        </div>
-
-        <!-- Album Terlama -->
-        <div id="albumLamaWrapper">
-            <h2 class="text-2xl font-bold mb-4">Album Terlama</h2>
-            <div class="overflow-x-auto scrollbar-hide cursor-grab" id="albumScrollLama">
-                <!-- isi di‐render oleh JS -->
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Tombol Genre -->
-    <div class="relative">
-        <button id="genreBtn"
-            class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-200 hover:text-white border border-gray-600 transition-all duration-300 ease-in-out shadow-lg font-semibold tracking-wide hover:scale-105 active:scale-95">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 19V6l-2 2m0 0l2-2m0 0l2 2m4 10v-4m0 0l2 2m-2-2l-2 2" />
-            </svg>
-            Genre
-        </button>
-
-        <!-- Container Genre (Popover) -->
-        <!-- Container Genre (Popover) -->
-        <div id="genreContainer"
-            class="absolute right-0 mt-2 z-50 bg-[#24252a] p-6 rounded-2xl shadow-2xl w-80 transition-all duration-300"
-            style="display: none;">
-            <h3 id="genreTitle" class="text-lg font-semibold mb-4 text-gray-200 tracking-wide text-center">
-                Genre
-            </h3>
-            <ul class="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto scrollbar-hide" id="genreList">
-                @foreach ($genres as $genre)
-                <li class="bg-[#2e2f35] border border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-500 hover:text-white
+            <!-- Genre Popover -->
+            <div id="genreContainer"
+                class="absolute right-0 mt-2 z-50 bg-[#24252a] p-6 rounded-2xl shadow-2xl w-80 transition-all duration-300"
+                style="display: none;">
+                <h3 id="genreTitle" class="text-lg font-semibold mb-4 text-gray-200 tracking-wide text-center">
+                    Genre
+                </h3>
+                <ul class="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto scrollbar-hide" id="genreList">
+                    @foreach ($genres as $genre)
+                    <li class="bg-[#2e2f35] border border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-500 hover:text-white
                rounded-lg px-4 py-2 cursor-pointer transition duration-200 ease-in-out flex items-center justify-center font-medium shadow-sm"
-                    data-genre="{{ $genre->name }}">
-                    {{ $genre->name }}
-                </li>
-                @endforeach
-            </ul>
+                        data-genre="{{ $genre->name }}">
+                        {{ $genre->name }}
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
         </div>
-
     </div>
-
-
 </div>
 
-<!-- Modal Album -->
-<div id="albumModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-[#24252a] rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center gap-4">
-                <img id="modalAlbumArt" class="w-20 h-20 rounded-full object-cover" src="" alt="">
-                <div>
-                    <h3 id="modalAlbumTitle" class="text-xl font-bold text-white"></h3>
-                    <p id="modalAlbumArtist" class="text-gray-400"></p>
-                </div>
-            </div>
-            <button onclick="closeAlbumModal()" class="text-gray-400 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+<!-- Featured Albums Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="albumCollection">
+    <!-- Albums will be rendered here by JS -->
+</div>
+
+<!-- Recent Releases -->
+<div class="space-y-4" id="albumBaruWrapper">
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-100">Recent Releases</h2>
+        <div class="flex gap-2">
+            <button onclick="scrollToLeft('albumScrollBaru')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button onclick="scrollToRight('albumScrollBaru')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
         </div>
-        <div id="albumSongsList" class="space-y-2">
-            <!-- Lagu-lagu akan di-render oleh JS -->
+    </div>
+    <div class="overflow-x-auto scrollbar-hide" id="albumScrollBaru">
+        <!-- Recent albums will be rendered here -->
+    </div>
+</div>
+
+<!-- Genre-based Recommendations/recently played(soon) --> 
+<div class="space-y-4 mt-5" id="genreBasedSection">
+    <div class="flex justify-between items-center">
+        <h2 id="albumTitle" class="text-2xl font-bold text-gray-100 mt-5"></h2>
+        <div class="flex gap-2">
+            <button onclick="scrollToLeft('albumScroll')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button onclick="scrollToRight('albumScroll')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="relative overflow-x-auto scrollbar-hide" id="albumScroll">
+        <div class="flex gap-4 py-2">
+            <!-- Genre-based recommendations will be rendered here -->
         </div>
     </div>
 </div>
 
-
+<!-- Classic Albums -->
+<div class="space-y-4 mt-5" id="albumLamaWrapper">
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-100 mt-5">Classic Albums</h2>
+        <div class="flex gap-2">
+            <button onclick="scrollToLeft('albumScrollLama')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button onclick="scrollToRight('albumScrollLama')"
+                class="p-2 rounded-full bg-[#2e2f35] hover:bg-[#3a3b42] text-gray-300 transition-colors duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="overflow-x-auto scrollbar-hide" id="albumScrollLama">
+        <!-- Classic albums will be rendered here -->
+    </div>
+</div>
+</div>
 <script>
     const API_BASE = 'http://10.21.1.125:8000/api';
     let activeGenre = null;
@@ -136,9 +153,20 @@
 
     // Fetch lagu berdasarkan genre
     async function fetchSongsByGenre(genre) {
-        const res = await fetch(`${API_BASE}/songs?genre=${encodeURIComponent(genre)}`);
-        if (!res.ok) throw new Error('Gagal mem-fetch songs by genre');
-        return res.json();
+        try {
+            const res = await fetch(`${API_BASE}/songs?genre=${encodeURIComponent(genre)}`);
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
+            if (!data || !Array.isArray(data)) {
+                throw new Error('Invalid data format received');
+            }
+            return data;
+        } catch (error) {
+            console.error('fetchSongsByGenre error:', error);
+            throw error; // Re-throw to be caught by the caller
+        }
     }
 
     // Event klik genre
@@ -164,8 +192,15 @@
                     activeGenre = genre;
                     try {
                         const songs = await fetchSongsByGenre(genre);
-                        document.getElementById('albumTitle').textContent =
-                            `Lagu dengan genre ${genre}`;
+                        if (songs.length === 0) {
+                            iziToast.info({
+                                message: 'No songs found for genre ' + genre,
+                                position: 'topRight',
+                                timeout: 3000,
+                            });
+                            return;
+                        }
+                        document.getElementById('albumTitle').textContent = `Lagu dengan genre ${genre}`;
                         renderCarousel(songs, 'albumScroll');
                         document.getElementById('albumScroll').scrollIntoView({
                             behavior: 'smooth'
@@ -176,7 +211,12 @@
                             el.classList.remove('bg-gray-700', 'text-white'));
                         li.classList.add('bg-gray-700', 'text-white');
                     } catch (err) {
-                        alert('Gagal memuat lagu genre ' + genre);
+                        console.error('Genre filter error:', err);
+                        iziToast.success({
+                            message: 'Songs for genre ' + genre,
+                            position: 'topRight',
+                            timeout: 3000,
+                        });
                     }
                 }
             });
@@ -206,18 +246,30 @@
     // Render carousel
     function renderCarousel(songs, containerId) {
         const container = document.getElementById(containerId);
-        container.innerHTML = `<div class="flex gap-6"></div>`;
+        container.innerHTML = `<div class="flex gap-6 py-2"></div>`;
         const row = container.querySelector('.flex');
+
         songs.forEach(song => {
             const card = document.createElement('div');
-            card.className = 'w-40 flex-shrink-0 cursor-pointer';
+            card.className = 'group w-48 flex-shrink-0 cursor-pointer transition-transform duration-300 hover:scale-105';
             card.innerHTML = `
-                <img class="w-40 h-40 object-cover rounded-lg mb-2"
-                    src="${song.cover_url}"
-                    alt="${song.title}">
-                <div class="text-sm font-semibold truncate">${song.title}</div>
-                <div class="text-xs text-gray-500 truncate">Album • ${song.artist}</div>
-            `;
+            <div class="relative overflow-hidden rounded-xl aspect-square mb-3">
+                <img class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+                     src="${song.cover_url}"
+                     alt="${song.title}">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+                    <button class="w-12 h-12 rounded-full bg-indigo-500 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-1 px-2">
+                <div class="font-semibold text-gray-100 truncate">${song.title}</div>
+                <div class="text-sm text-gray-400 truncate">${song.artist}</div>
+            </div>
+        `;
             card.onclick = () => playSelectedTrack(song);
             row.appendChild(card);
         });

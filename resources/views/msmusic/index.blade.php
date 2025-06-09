@@ -84,7 +84,7 @@
                 </a>
             </div>
             <!-- Table -->
-            <!-- Table -->
+            <!-- Table --
             <div class="overflow-x-auto">
                 <table id="tabmusic" class="min-w-full text-sm text-left text-gray-300">
                     <thead class="bg-gray-700 text-gray-100">

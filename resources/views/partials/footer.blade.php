@@ -10,22 +10,17 @@
 
 <footer id="musicFooter"
     class="fixed bottom-0 left-0 right-0 bg-[#212121] text-gray-300 p-4 flex items-center justify-between space-x-4 shadow-lg z-50 transition-transform duration-300">
-
-    <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
-    <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
-    <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
-    <!-- filepath: c:\xampp\htdocs\vmp\resources\views\partials\footer.blade.php -->
     <div class="flex items-center space-x-4 min-w-0 w-full">
         <img id="albumArt" src="/assets/images/HistoryOfBadDecisions_NeckDeep.jpeg" alt="Album Art"
             class="w-12 h-12 rounded object-cover flex-shrink-0 shadow-md" />
         <div class="flex flex-col justify-center min-w-fit">
             <div id="trackTitle" class="font-semibold text-gray-100">
-                History of Bad Decisions
+               
             </div>
             <div class="text-gray-400 text-sm" id="trackArtist">
-                Neck Deep
-            </div>
+
         </div>
+    </div>
         <span class="text-gray-400 text-sm ml-2 whitespace-nowrap flex-shrink-0" id="trackDuration">0:00 / 0:00</span>
     </div>
 
@@ -122,98 +117,7 @@
     <audio id="footerAudio"></audio>
 </footer>
 
-<style>
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .animate-fadeIn {
-        animation: fadeIn 0.25s ease;
-    }
-
-    .range-vertical {
-        writing-mode: bt-lr;
-        -webkit-appearance: slider-vertical;
-        width: 10px;
-        height: 110px;
-        background: linear-gradient(180deg, #63a4ff 0%, #23242b 100%);
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(99, 164, 255, 0.15);
-        margin: 0 auto;
-    }
-
-    .range-vertical::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #63a4ff;
-        border: 2px solid #fff;
-        box-shadow: 0 0 8px #63a4ff88;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .range-vertical:focus::-webkit-slider-thumb,
-    .range-vertical:hover::-webkit-slider-thumb {
-        transform: scale(1.2);
-        box-shadow: 0 0 16px #63a4ffcc;
-    }
-
-    .range-vertical::-moz-range-thumb {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #63a4ff;
-        border: 2px solid #fff;
-        box-shadow: 0 0 8px #63a4ff88;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .range-vertical:focus::-moz-range-thumb,
-    .range-vertical:hover::-moz-range-thumb {
-        transform: scale(1.2);
-        box-shadow: 0 0 16px #63a4ffcc;
-    }
-
-    .range-vertical::-ms-thumb {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #63a4ff;
-        border: 2px solid #fff;
-        box-shadow: 0 0 8px #63a4ff88;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .range-vertical:focus::-ms-thumb,
-    .range-vertical:hover::-ms-thumb {
-        transform: scale(1.2);
-        box-shadow: 0 0 16px #63a4ffcc;
-    }
-
-    .range-vertical::-webkit-slider-runnable-track {
-        background: transparent;
-        border-radius: 8px;
-    }
-
-    .range-vertical::-ms-fill-lower,
-    .range-vertical::-ms-fill-upper {
-        background: transparent;
-    }
-
-    .range-vertical:focus {
-        outline: none;
-    }
-</style>
 
 <script>
     const tracks = [{
